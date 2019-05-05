@@ -1,0 +1,46 @@
+{
+	"name": "reveal-socket-remote",
+	"version": "1.0.0",
+	"description": "Reveal.js socket io remote server with plugin",
+	"main": "dist/index.js",
+	"author": "Nils Bergmann",
+	"license": "MIT",
+	"private": true,
+	"dependencies": {
+		"buefy": "^0.7.5",
+		"fastify": "^2.3.0",
+		"fastify-autoload": "^0.8.0",
+		"fastify-static": "^2.4.0",
+		"lodash": "^4.17.11",
+		"lodash-es": "^4.17.11",
+		"parcel-bundler": "^1.12.3",
+		"random-words": "^1.1.0",
+		"reveal.js": "^3.8.0",
+		"socket.io": "^2.2.0",
+		"socket.io-client": "^2.2.0",
+		"vue": "^2.6.10",
+		"vue-hot-reload-api": "^2.3.3",
+		"vue-socket.io": "^3.0.7",
+		"vue2-touch-events": "^2.0.0",
+		"yargs": "^13.2.2"
+	},
+	"scripts": {
+		"start": "run-s server",
+		"dev": "run-p dev:presentation dev:remote server",
+		"dev:presentation": "parcel watch ./src-www/presentation/**.html -d ./www/presentation/ --public-url ./ --bundle-node-modules",
+		"dev:remote": "parcel watch ./src-www/remote/**.html -d ./www/remote/ --public-url ./ --bundle-node-modules",
+		"server": "node server/index.js",
+		"build": "run-s build:clean build:www",
+		"build:lib": "parcel build --target node index.js -d ./dist/",
+		"build:clean": "rimraf ./www",
+		"build:www": "run-p build:remote build:presentation",
+		"build:remote": "parcel build ./src-www/remote/**.html -d ./www/remote/ --public-url ./ --bundle-node-modules",
+		"build:presentation": "parcel build ./src-www/presentation/**.html -d ./www/presentation/ --public-url ./ --bundle-node-modules"
+	},
+	"devDependencies": {
+		"@vue/component-compiler-utils": "^3.0.0",
+		"npm-run-all": "^4.1.5",
+		"rimraf": "^2.6.3",
+		"vue-template-compiler": "^2.6.10"
+	}
+}
