@@ -1,6 +1,5 @@
 const fastify = require('fastify')();
 const path = require('path');
-const AutoLoad = require('fastify-autoload');
 const io = require('socket.io')(fastify.server);
 const { handleSocket } = require('./socket/handleSocket');
 const argv = require('yargs')
@@ -16,10 +15,6 @@ const argv = require('yargs')
 
 fastify.register(require('fastify-static'), {
 	root: path.join(__dirname, '../www')
-});
-
-fastify.register(AutoLoad, {
-	dir: path.join(__dirname, 'routes')
 });
 
 fastify.register(require('fastify-cors'), {
