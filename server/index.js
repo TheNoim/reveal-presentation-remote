@@ -22,6 +22,10 @@ fastify.register(AutoLoad, {
 	dir: path.join(__dirname, 'routes')
 });
 
+fastify.register(require('fastify-cors'), {
+	// put your options here
+});
+
 handleSocket(io);
 
 fastify.listen(argv.port, argv.host, () => {
