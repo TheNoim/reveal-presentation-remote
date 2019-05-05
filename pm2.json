@@ -1,7 +1,6 @@
 {
 	"name": "reveal-socket-remote",
 	"script": "server/index.js",
-	"instances": "2",
 	"env": {
 		"NODE_ENV": "development"
 	},
