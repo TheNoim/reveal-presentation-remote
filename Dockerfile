@@ -1,4 +1,4 @@
-FROM node:dubnium-alpine
+FROM keymetrics/pm2:10-alpine
 
 LABEL maintainer="Nils Bergmann <nilsbergmann@noim.io>"
 LABEL org.label-schema.url="https://github.com/TheNoim/reveal-presentation-remote"
@@ -19,5 +19,4 @@ RUN yarn build:docker && \
     rm -f reveal-socket-plugin.js
 
 ADD server/ server/
-
-CMD ["node", "server/index.js"]
+ADD pm2.json pm2.json
