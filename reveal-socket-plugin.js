@@ -37,16 +37,16 @@ class RevealSocketPlugin {
 				const action = get(payload, 'action', 'none');
 				switch (action) {
 					case 'next':
-						this.Reveal.next();
+						this.reveal.next();
 						break;
 					case 'prev':
-						this.Reveal.prev();
+						this.reveal.prev();
 						break;
 					case 'up':
-						this.Reveal.up();
+						this.reveal.up();
 						break;
 					case 'down':
-						this.Reveal.down();
+						this.reveal.down();
 						break;
 				}
 			});

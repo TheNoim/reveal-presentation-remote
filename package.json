@@ -10,7 +10,28 @@
 		"type": "git",
 		"url": "https://github.com/TheNoim/reveal-presentation-remote.git"
 	},
-	"dependencies": {
+	"dependencies": {},
+	"scripts": {
+		"start": "run-s server",
+		"dev": "run-p dev:presentation dev:remote server",
+		"dev:presentation": "parcel watch ./src-www/presentation/**.html -d ./www/presentation/ --public-url ./ --bundle-node-modules",
+		"dev:remote": "parcel watch ./src-www/remote/**.html -d ./www/remote/ --public-url ./ --bundle-node-modules",
+		"server": "node server/index.js",
+		"build": "run-s build:clean build:www",
+		"build:docker": "cross-env PARCEL_WORKERS=1 run-s build",
+		"build:docker-image": "docker build . -t noim/reveal-socket-remote:latest",
+		"build:lib": "parcel build --target node index.js -d ./dist/ --bundle-node-modules",
+		"build:clean": "rimraf ./www",
+		"build:www": "run-p build:remote build:presentation",
+		"build:remote": "parcel build ./src-www/remote/**.html -d ./www/remote/ --public-url ./ --bundle-node-modules",
+		"build:presentation": "parcel build ./src-www/presentation/**.html -d ./www/presentation/ --public-url ./ --bundle-node-modules"
+	},
+	"devDependencies": {
+		"@vue/component-compiler-utils": "^3.0.0",
+		"cross-env": "^5.2.0",
+		"npm-run-all": "^4.1.5",
+		"rimraf": "^2.6.3",
+		"vue-template-compiler": "^2.6.10",
 		"buefy": "^0.7.5",
 		"fastify": "^2.3.0",
 		"fastify-autoload": "^0.8.0",
@@ -28,27 +49,5 @@
 		"vue-socket.io": "^3.0.7",
 		"vue2-touch-events": "^2.0.0",
 		"yargs": "^13.2.2"
-	},
-	"scripts": {
-		"start": "run-s server",
-		"dev": "run-p dev:presentation dev:remote server",
-		"dev:presentation": "parcel watch ./src-www/presentation/**.html -d ./www/presentation/ --public-url ./ --bundle-node-modules",
-		"dev:remote": "parcel watch ./src-www/remote/**.html -d ./www/remote/ --public-url ./ --bundle-node-modules",
-		"server": "node server/index.js",
-		"build": "run-s build:clean build:www",
-		"build:docker": "cross-env PARCEL_WORKERS=1 run-s build",
-		"build:docker-image": "docker build . -t noim/reveal-socket-remote:latest",
-		"build:lib": "parcel build --target node index.js -d ./dist/",
-		"build:clean": "rimraf ./www",
-		"build:www": "run-p build:remote build:presentation",
-		"build:remote": "parcel build ./src-www/remote/**.html -d ./www/remote/ --public-url ./ --bundle-node-modules",
-		"build:presentation": "parcel build ./src-www/presentation/**.html -d ./www/presentation/ --public-url ./ --bundle-node-modules"
-	},
-	"devDependencies": {
-		"@vue/component-compiler-utils": "^3.0.0",
-		"cross-env": "^5.2.0",
-		"npm-run-all": "^4.1.5",
-		"rimraf": "^2.6.3",
-		"vue-template-compiler": "^2.6.10"
 	}
 }
