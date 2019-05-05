@@ -5,7 +5,7 @@
 	"main": "dist/index.js",
 	"author": "Nils Bergmann",
 	"license": "MIT",
-	"private": true,
+	"private": false,
 	"dependencies": {
 		"buefy": "^0.7.5",
 		"fastify": "^2.3.0",
