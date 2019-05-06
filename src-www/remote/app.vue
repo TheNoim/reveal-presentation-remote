@@ -8,7 +8,7 @@
   >
     <div class="hero-body">
       <div class="container">
-        <h1 class="title">Remote</h1>
+        <h4 class="title is-5">Remote</h4>
         <div v-if="!presentation">
           <div class="level" v-for="(pres, index) in presentations" :key="index">
             <div class="level-left">
@@ -49,7 +49,9 @@ export default {
     data() {
         return {
             presentation: null,
-            presentations: []
+            presentations: [],
+            lastPassword: null,
+            lastId: null
         };
     },
     mounted() {
@@ -80,6 +82,12 @@ export default {
         },
         destroy() {
             this.presentation = null;
+        },
+        reconnect() {
+            if (this.lastPassword && this.lastId) {
+                this.$snackbar.open(`Try to resubscribe...`);
+                this.subscribeTo(this.lastId, this.lastPassword);
+            }
         }
     },
     methods: {
@@ -90,22 +98,28 @@ export default {
                     placeholder: 'my secret password'
                 },
                 onConfirm: value => {
-                    let pw = value;
-                    if (pw === '') pw = null;
-                    this.$socket.emit(
-                        'subscribeTo',
-                        {
-                            password: pw,
-                            id
-                        },
-                        state => {
-                            if (state) {
-                                this.presentation = state;
-                            }
-                        }
-                    );
+                    this.subscribeTo(id, value);
                 }
             });
+        },
+        subscribeTo(id, password) {
+            let pw = password;
+            if (pw === '') pw = null;
+            if (typeof pw === 'string') pw = pw.toLowerCase();
+            this.$socket.emit(
+                'subscribeTo',
+                {
+                    password: pw,
+                    id
+                },
+                state => {
+                    if (state) {
+                        this.lastPassword = password;
+                        this.presentation = state;
+                        this.lastId = id;
+                    }
+                }
+            );
         },
         swipeLeft() {
             if (this.presentation) {

@@ -760,6 +760,11 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
 
+"@types/socket.io-client@1.4.32":
+  version "1.4.32"
+  resolved "https://registry.yarnpkg.com/@types/socket.io-client/-/socket.io-client-1.4.32.tgz#988a65a0386c274b1c22a55377fab6a30789ac14"
+  integrity sha512-Vs55Kq8F+OWvy1RLA31rT+cAyemzgm0EWNeax6BWF8H7QiiOYMJIdcwSDdm5LVgfEkoepsWkS+40+WNb7BUMbg==
+
 "@vue/component-compiler-utils@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@vue/component-compiler-utils/-/component-compiler-utils-3.0.0.tgz#d16fa26b836c06df5baaeb45f3d80afc47e35634"
@@ -1335,6 +1340,11 @@ callsites@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-2.0.0.tgz#06eb84f00eea413da86affefacbffb36093b3c50"
   integrity sha1-BuuE8A7qQT2oav/vrL/7Ngk7PFA=
+
+camelcase@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-5.0.0.tgz#03295527d58bd3cd4aa75363f35b2e8d97be2f42"
+  integrity sha512-faqwZqnWxbxn+F1d399ygeamQNy3lPp/H9H6rNrqYh4FSVCtcY+3cub1MxA8o9mDd55mM8Aghuu/kuyYA6VTsA==
 
 camelcase@^5.0.0:
   version "5.3.1"
@@ -5306,7 +5316,7 @@ socket.io-adapter@~1.1.0:
   resolved "https://registry.yarnpkg.com/socket.io-adapter/-/socket.io-adapter-1.1.1.tgz#2a805e8a14d6372124dd9159ad4502f8cb07f06b"
   integrity sha1-KoBeihTWNyEk3ZFZrUUC+MsH8Gs=
 
-socket.io-client@2.2.0, socket.io-client@^2.1.1, socket.io-client@^2.2.0:
+socket.io-client@2.2.0, socket.io-client@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/socket.io-client/-/socket.io-client-2.2.0.tgz#84e73ee3c43d5020ccc1a258faeeb9aec2723af7"
   integrity sha512-56ZrkTDbdTLmBIyfFYesgOxsjcLnwAKoN4CiPyTVkMQj3zTUh0QAx3GbvIvLpFEOvQWu92yyWICxB0u7wkVbYA==
@@ -6015,12 +6025,13 @@ vue-hot-reload-api@^2.3.3:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.3.tgz#2756f46cb3258054c5f4723de8ae7e87302a1ccf"
   integrity sha512-KmvZVtmM26BQOMK1rwUZsrqxEGeKiYSZGA7SNWE6uExx8UX/cj9hq2MRV/wWC3Cq6AoeDGk57rL9YMFRel/q+g==
 
-vue-socket.io@^3.0.7:
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/vue-socket.io/-/vue-socket.io-3.0.7.tgz#fa6db12014243039f2d633d4458e461075d52dc8"
-  integrity sha512-dTo0Vr6jIziIax5/m+mY+iwzSBdH9ZgcUR0FkyfFNklBYvb6bdNbo5tJTydMh0DTZ8f+gK4Xl6Ihtnv6YIsulQ==
+vue-socket.io-extended@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/vue-socket.io-extended/-/vue-socket.io-extended-3.2.1.tgz#a7a74c83fd7e6c0ab41b8a90b09c07c9524b62fc"
+  integrity sha512-6lMLkG0N83zgfLWHRkabiJgwkJrk4Fit7+JyYuzfsR4at03kGDOmidIK6IWX+qml9iddrPThmYzQAOP8xGgq7g==
   dependencies:
-    socket.io-client "^2.1.1"
+    "@types/socket.io-client" "1.4.32"
+    camelcase "5.0.0"
 
 vue-template-compiler@^2.6.10:
   version "2.6.10"
