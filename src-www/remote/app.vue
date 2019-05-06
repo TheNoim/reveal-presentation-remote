@@ -158,3 +158,9 @@ export default {
     height: 100vh;
 }
 </style>
+
+<style>
+.no-note {
+    display: none;
+}
+</style>
