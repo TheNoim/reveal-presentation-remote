@@ -9,6 +9,6 @@ import VueSocketio from 'vue-socket.io-extended';
 Vue.use(Vue2TouchEvents);
 Vue.use(Buefy);
 
-Vue.use(VueSocketio, io('https://remote.noim.io/'));
+Vue.use(VueSocketio, io());
 
 new Vue(App).$mount('#app');

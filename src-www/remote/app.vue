@@ -13,9 +13,12 @@
           <div class="level" v-for="(pres, index) in presentations" :key="index">
             <div class="level-left">
               <div class="level-item">
-                <p class="subtitle is-5">
-                  <strong>{{pres.info.title}}</strong>
-                </p>
+                <div>
+                  <p class="subtitle is-5">
+                    <strong>{{pres.info.title}}</strong>
+                  </p>
+                  <p v-if="clientInfo(pres)" v-html="clientInfo(pres)"></p>
+                </div>
               </div>
             </div>
             <div class="level-right">
@@ -44,6 +47,8 @@
 </template>
 
 <script>
+import { get } from 'lodash-es';
+
 export default {
     name: 'app',
     data() {
@@ -148,9 +153,40 @@ export default {
                     action: 'up'
                 });
             }
+        },
+        clientInfo(pres) {
+            let string = '';
+            const country = get(pres, 'info.client.ip.country_code', false);
+            const ip = get(pres, 'info.client.ip.ip', false);
+            const os = get(pres, 'info.client.os', false);
+            if (country) {
+                const countryLowerCase = country.toLowerCase();
+                string += `<img style="height: 20px;" src="https://www.countryflags.io/${countryLowerCase}/flat/32.png">`;
+            }
+            if (ip) {
+                string = addAndExtend(string, ip);
+            }
+            if (os) {
+                string = addAndExtend(string, os);
+            }
+
+            if (string === '') return false;
+            return string;
         }
     }
 };
+
+function addAndExtend(src, add) {
+    if (src.endsWith(' - ')) {
+        return src + add;
+    } else {
+        if (src !== '') {
+            return src + ' - ' + add;
+        } else {
+            return src + add;
+        }
+    }
+}
 </script>
 
 <style scoped>

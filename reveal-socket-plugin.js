@@ -1,15 +1,42 @@
+(function() {
+	if (typeof globalThis === 'object') return;
+	Object.prototype.__defineGetter__('__magic__', function() {
+		return this;
+	});
+	__magic__.globalThis = __magic__; // lolwat
+	delete Object.prototype.__magic__;
+})();
+
 const io = require('socket.io-client');
 const randomWord = require('random-words');
 const { get } = require('lodash');
-const ClientJS = require('clientjs');
+require('clientjs/dist/client.min.js');
 const client = new ClientJS();
+
+const calls = [];
+
+let ipInfo = null;
+
+globalThis.setIP = function(json) {
+	ipInfo = json;
+	for (const call of calls) {
+		if (typeof call === 'function') {
+			call(json);
+		}
+	}
+};
 
 class RevealSocketPlugin {
 	constructor(Reveal, address) {
 		this.reveal = Reveal;
 		this.address = address;
+		this.ip = ipInfo;
 
 		this.init();
+
+		calls.push(json => {
+			this.updateIP(json);
+		});
 	}
 
 	init() {
@@ -67,6 +94,7 @@ class RevealSocketPlugin {
 		} else {
 			slideTitle = 'No title';
 		}
+		console.log({ client, ClientJS });
 		const state = {
 			config: this.reveal.getConfig(),
 			total: this.reveal.getTotalSlides(),
@@ -82,11 +110,21 @@ class RevealSocketPlugin {
 				lang: client.getLanguage(),
 				screenPrint: client.getScreenPrint(),
 				resolution: client.getCurrentResolution(),
-				availableResolution: client.getAvailableResolution()
+				availableResolution: client.getAvailableResolution(),
+				ip: this.ip
 			}
 		};
 		console.log({ state, slide, thing: this.reveal.getState() });
 		return state;
+	}
+
+	updateIP(json) {
+		if (json && json.ip) {
+			this.ip = json.ip;
+			if (this.socket) {
+				this.socket.emit('updateState', this.generateState());
+			}
+		}
 	}
 }
 
