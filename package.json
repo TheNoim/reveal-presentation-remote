@@ -19,18 +19,17 @@
 	},
 	"scripts": {
 		"start": "run-s server",
-		"dev": "run-p dev:presentation dev:remote server",
-		"dev:presentation": "parcel watch ./src-www/presentation/**.html -d ./www/presentation/ --public-url ./ --bundle-node-modules",
-		"dev:remote": "parcel watch ./src-www/remote/**.html -d ./www/remote/ --public-url ./ --bundle-node-modules",
+		"dev": "run-p dev:remote server",
+		"dev:remote": "parcel watch ./src-www/remote/**.html -d ./www/ --public-url ./ --bundle-node-modules",
 		"server": "node server/index.js",
 		"build": "run-s build:clean build:www",
 		"build:docker": "cross-env PARCEL_WORKERS=1 run-s build",
 		"build:docker-image": "docker build . -t noim/reveal-socket-remote:latest",
 		"build:lib": "parcel build --target node index.js -d ./dist/",
 		"build:clean": "rimraf ./www",
-		"build:www": "run-p build:remote build:presentation",
-		"build:remote": "parcel build ./src-www/remote/**.html -d ./www/remote/ --public-url ./ --bundle-node-modules",
-		"build:presentation": "parcel build ./src-www/presentation/**.html -d ./www/presentation/ --public-url ./ --bundle-node-modules"
+		"build:www": "run-p build:remote build:redirect",
+		"build:redirect": "mkdir -p ./www/remote/ && cp ./src-www/redirect.html ./www/remote/index.html",
+		"build:remote": "parcel build ./src-www/remote/**.html -d ./www/ --public-url ./ --bundle-node-modules"
 	},
 	"devDependencies": {
 		"@vue/component-compiler-utils": "^3.0.0",
