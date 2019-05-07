@@ -5,3 +5,6 @@ www/
 server/
 src-www/
 .gitignore
+.dockerignore
+Dockerfile
+pm2.json
