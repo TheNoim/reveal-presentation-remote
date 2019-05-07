@@ -11,6 +11,7 @@
 		"url": "https://github.com/TheNoim/reveal-presentation-remote.git"
 	},
 	"dependencies": {
+		"clientjs": "^0.1.11",
 		"lodash": "^4.17.11",
 		"random-words": "^1.1.0",
 		"socket.io-client": "^2.2.0",

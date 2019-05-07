@@ -1,6 +1,8 @@
 const io = require('socket.io-client');
 const randomWord = require('random-words');
 const { get } = require('lodash');
+const ClientJS = require('clientjs');
+const client = new ClientJS();
 
 class RevealSocketPlugin {
 	constructor(Reveal, address) {
@@ -71,7 +73,17 @@ class RevealSocketPlugin {
 			notes: this.reveal.getSlideNotes(),
 			indices: this.reveal.getIndices(),
 			title: document.getElementsByTagName('title')[0].innerText,
-			slideTitle
+			slideTitle,
+			client: {
+				browser: client.getBrowser(),
+				browserVersion: client.getBrowserVersion(),
+				os: client.getOS(),
+				device: client.getDevice(),
+				lang: client.getLanguage(),
+				screenPrint: client.getScreenPrint(),
+				resolution: client.getCurrentResolution(),
+				availableResolution: client.getAvailableResolution()
+			}
 		};
 		console.log({ state, slide, thing: this.reveal.getState() });
 		return state;
