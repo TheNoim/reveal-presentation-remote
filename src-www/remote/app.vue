@@ -122,6 +122,7 @@ export default {
                         this.lastPassword = password;
                         this.presentation = state;
                         this.lastId = id;
+                        this.$snackbar.open(`Successfully subscribed!`);
                     }
                 }
             );
