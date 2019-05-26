@@ -1,6 +1,6 @@
 {
 	"name": "reveal-socket-remote",
-	"version": "1.3.2",
+	"version": "1.3.3",
 	"description": "Reveal.js socket io remote server with plugin",
 	"main": "dist/index.js",
 	"author": "Nils Bergmann",
