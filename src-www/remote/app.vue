@@ -160,6 +160,8 @@ export default {
             const country = get(pres, 'info.client.ip.country_code', false);
             const ip = get(pres, 'info.client.ip.ip', false);
             const os = get(pres, 'info.client.os', false);
+            const host = get(pres, 'info.meta.host', false);
+            const env = get(pres, 'info.meta.env', 'unknown');
             if (country) {
                 const countryLowerCase = country.toLowerCase();
                 string += `<img style="height: 20px;" src="https://www.countryflags.io/${countryLowerCase}/flat/32.png">`;
@@ -169,6 +171,23 @@ export default {
             }
             if (os) {
                 string = addAndExtend(string, os);
+            }
+            if (host) {
+                string = addAndExtend(string, host);
+            }
+            if (env) {
+                switch (env) {
+                    case 'production':
+                        string = addAndExtend(string, 'Pro');
+                        break;
+                    case 'development':
+                        string = addAndExtend(string, 'Dev');
+                        break;
+                    default:
+                    case 'unknown':
+                        string = addAndExtend(string, 'Unk');
+                        break;
+                }
             }
 
             if (string === '') return false;
