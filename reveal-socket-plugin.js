@@ -33,7 +33,10 @@ class RevealSocketPlugin {
 		this.reveal = Reveal;
 		this.address = address;
 		this.ip = ipInfo;
-		this.meta = meta;
+		this.meta = {
+			...meta,
+			host: globalThis.location.host
+		};
 		this.storage = globalThis.localStorage;
 
 		this.init();
