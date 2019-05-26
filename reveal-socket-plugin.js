@@ -26,11 +26,15 @@ globalThis.setIP = function(json) {
 	}
 };
 
+const ONE_HOUR = 60 * 60 * 1000;
+
 class RevealSocketPlugin {
-	constructor(Reveal, address) {
+	constructor(Reveal, address, meta) {
 		this.reveal = Reveal;
 		this.address = address;
 		this.ip = ipInfo;
+		this.meta = meta;
+		this.storage = globalThis.localStorage;
 
 		this.init();
 
@@ -39,8 +43,31 @@ class RevealSocketPlugin {
 		});
 	}
 
-	init() {
+	_getLastOderNewPassword() {
 		const password = randomWord();
+		const randomPwSave = () => this.savePassword(password);
+		if (!this.storage) return randomPwSave();
+		const lastPassword = this.storage.getItem('lastPassword');
+		const lastPasswordDateString = this.storage.getItem('lastPasswordDate');
+		if (!lastPassword || !lastPasswordDateString) return randomPwSave();
+		const lastPasswordDate = new Date(lastPasswordDateString);
+		const threeHoursAgo = new Date() - 3 * ONE_HOUR;
+		if (threeHoursAgo > lastPasswordDate) {
+			return lastPassword;
+		} else {
+			return randomPwSave();
+		}
+	}
+
+	savePassword(password) {
+		if (!this.storage) return;
+		this.storage.setItem('lastPassword', password);
+		this.storage.setItem('lastPasswordDate', new Date().toDateString());
+		return password;
+	}
+
+	init() {
+		const password = this.getLastOderNewPassword();
 		const passwordSlide = document.getElementById('passwordSlide');
 		if (passwordSlide) {
 			passwordSlide.innerHTML =
@@ -112,7 +139,8 @@ class RevealSocketPlugin {
 				resolution: client.getCurrentResolution(),
 				availableResolution: client.getAvailableResolution(),
 				ip: this.ip
-			}
+			},
+			meta: this.meta
 		};
 		console.log({ state, slide, thing: this.reveal.getState() });
 		return state;
@@ -129,7 +157,7 @@ class RevealSocketPlugin {
 }
 
 module.exports = {
-	initRemoteSocket(Reveal, address) {
-		return new RevealSocketPlugin(Reveal, address);
+	initRemoteSocket(Reveal, address, meta = {}) {
+		return new RevealSocketPlugin(Reveal, address, meta);
 	}
 };
