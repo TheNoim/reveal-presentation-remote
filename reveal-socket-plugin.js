@@ -43,7 +43,7 @@ class RevealSocketPlugin {
 		});
 	}
 
-	_getLastOderNewPassword() {
+	getLastOderNewPassword() {
 		const password = randomWord();
 		const randomPwSave = () => this.savePassword(password);
 		if (!this.storage) return randomPwSave();
@@ -52,7 +52,7 @@ class RevealSocketPlugin {
 		if (!lastPassword || !lastPasswordDateString) return randomPwSave();
 		const lastPasswordDate = new Date(lastPasswordDateString);
 		const threeHoursAgo = new Date() - 3 * ONE_HOUR;
-		if (threeHoursAgo > lastPasswordDate) {
+		if (threeHoursAgo < lastPasswordDate) {
 			return lastPassword;
 		} else {
 			return randomPwSave();
@@ -62,7 +62,7 @@ class RevealSocketPlugin {
 	savePassword(password) {
 		if (!this.storage) return;
 		this.storage.setItem('lastPassword', password);
-		this.storage.setItem('lastPasswordDate', new Date().toDateString());
+		this.storage.setItem('lastPasswordDate', new Date().toISOString());
 		return password;
 	}
 
@@ -158,6 +158,8 @@ class RevealSocketPlugin {
 
 module.exports = {
 	initRemoteSocket(Reveal, address, meta = {}) {
-		return new RevealSocketPlugin(Reveal, address, meta);
+		const inst = new RevealSocketPlugin(Reveal, address, meta);
+		globalThis.lastRevealSocketPluginInstance = inst;
+		return inst;
 	}
 };
